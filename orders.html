@@ -1,0 +1,528 @@
+f<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NOVA - My Orders</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        header {
+            height: 75px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 30px;
+
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+
+            font-size: 28px;
+
+            cursor: pointer;
+        }
+
+        .company {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-left: 25px;
+        }
+
+        .company img {
+            width: 45px;
+            height: 45px;
+
+            object-fit: contain;
+        }
+
+        .company h1 {
+            margin: 0;
+
+            font-size: 25px;
+
+            font-family: Georgia, serif;
+
+            color: #4d0404ce;
+        }
+
+        .orders-page {
+            max-width: 900px;
+
+            margin: auto;
+
+            padding: 50px 25px;
+        }
+
+        .orders-title {
+            font-size: 36px;
+
+            margin-bottom: 35px;
+        }
+
+        .order-card {
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 25px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .order-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            border-bottom: 1px solid #eee;
+
+            padding-bottom: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .order-id {
+            font-weight: bold;
+        }
+
+        .order-date {
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .status {
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            background: #eee;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        .order-item {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .item-name {
+            font-weight: bold;
+        }
+
+        .item-details {
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .order-total {
+            display: flex;
+
+            justify-content: space-between;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            margin-top: 20px;
+        }
+
+        .empty-orders {
+            background: white;
+
+            text-align: center;
+
+            padding: 70px 20px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .continue-button {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 12px 25px;
+
+            background: #4d0404ce;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+        }
+
+        .loading {
+            text-align: center;
+
+            padding: 50px;
+
+            color: #777;
+        }
+
+        .error {
+            text-align: center;
+
+            padding: 50px;
+
+            color: #a00000;
+        }
+
+        @media (max-width: 600px) {
+
+            .order-header {
+                align-items: flex-start;
+
+                gap: 10px;
+
+                flex-direction: column;
+            }
+
+            .order-item {
+                flex-direction: column;
+
+                gap: 5px;
+            }
+
+        }
+            .order-actions {
+    margin-top: 20px;
+}
+
+.details-button {
+    padding: 11px 18px;
+    border: 1px solid #4d0404ce;
+    background: white;
+    color: #4d0404ce;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.details-button:hover {
+    background: #f8eeee;
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <header>
+
+        <button
+            class="back-button"
+            onclick="history.back()"
+        >
+            ←
+        </button>
+
+
+        <div class="company">
+
+            <img
+                src="logo.png"
+                alt="NOVA"
+            >
+
+            <h1>NOVA</h1>
+
+        </div>
+
+    </header>
+
+
+    <main class="orders-page">
+
+        <h1 class="orders-title">
+            📦 My Orders
+        </h1>
+
+
+        <div id="ordersContainer">
+
+            <div class="loading">
+                Loading orders...
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+        
+
+        async function loadOrders() {
+
+            const storedUser =
+                localStorage.getItem("novaUser");
+
+
+            if (!storedUser) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+            }
+
+
+            const user =
+                JSON.parse(storedUser);
+
+
+            const container =
+                document.getElementById(
+                    "ordersContainer"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/orders/" + user.id
+                    );
+
+
+                const orders =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        orders.error ||
+                        "Could not load orders"
+                    );
+
+                }
+
+
+                if (orders.length === 0) {
+
+                    container.innerHTML = `
+
+                        <div class="empty-orders">
+
+                            <h2>
+                                No orders yet
+                            </h2>
+
+                            <p>
+                                Your placed orders
+                                will appear here.
+                            </p>
+
+                            <a
+                                href="sample2.html"
+                                class="continue-button"
+                            >
+                                Start Shopping
+                            </a>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                container.innerHTML =
+                    orders.map(function(order) {
+
+                        const date =
+                            new Date(
+                                order.created_at
+                            ).toLocaleString(
+                                "en-IN"
+                            );
+
+
+                        const itemsHTML =
+                            order.items.map(
+                                function(item) {
+
+                                    return `
+
+                                        <div class="order-item">
+
+                                            <div>
+
+                                                <div class="item-name">
+                                                    ${item.product_name}
+                                                </div>
+
+                                                <div class="item-details">
+                                                    ₹${Number(
+                                                        item.price
+                                                    ).toLocaleString("en-IN")}
+                                                    ×
+                                                    ${item.quantity}
+                                                </div>
+
+                                            </div>
+
+                                            <strong>
+                                                ₹${(
+                                                    Number(item.price) *
+                                                    item.quantity
+                                                ).toLocaleString("en-IN")}
+                                            </strong>
+
+                                        </div>
+
+                                    `;
+
+                                }
+                            ).join("");
+
+
+                        return `
+
+                            <div class="order-card">
+
+                                <div class="order-header">
+
+                                    <div>
+
+                                        <div class="order-id">
+                                            Order #${order.id}
+                                        </div>
+
+                                        <div class="order-date">
+                                            ${date}
+                                        </div>
+
+                                    </div>
+
+
+                                    <span class="status">
+                                        ${order.status}
+                                    </span>
+
+                                </div>
+
+
+                                ${itemsHTML}
+
+
+                                <div class="order-total">
+
+                                    <span>
+                                        Total
+                                    </span>
+
+                                    <span>
+                                        ₹${Number(
+                                            order.total
+                                        ).toLocaleString("en-IN")}
+                                    </span>
+
+                                </div>
+
+                                <div class="order-actions">
+
+                                    <button
+                                    class="details-button"
+                                        onclick="window.location.href='order-details.html?id=${order.id}'"
+                                            >
+                                         View Order Details
+                                            </button>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }).join("");
+
+
+            } catch (error) {
+
+                console.error(
+                    "Orders error:",
+                    error
+                );
+
+
+                container.innerHTML = `
+
+                    <div class="error">
+
+                        Could not load your orders.
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+        function showOrderDetails(orderId) {
+
+    alert(
+        "Order Details\n\n" +
+        "Order ID: #" + orderId
+    );
+
+}
+
+
+        loadOrders();
+
+    </script>
+
+
+</body>
+
+</html>

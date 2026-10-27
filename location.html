@@ -1,0 +1,258 @@
+<escape><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location | NOVA</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffafa;
+            color: #292020;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #4d0404;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #e7b8b8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #300303, #720b0b);
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(35px, 5vw, 55px);
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #f0dddd;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: auto;
+            padding: 55px 25px;
+        }
+
+        .location-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            align-items: start;
+        }
+
+        h2 {
+            color: #650505;
+            margin-bottom: 15px;
+        }
+
+        .location-info p {
+            color: #625656;
+            margin-bottom: 15px;
+        }
+
+        .location-box {
+            background: white;
+            border: 1px solid #eadada;
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .map-box {
+            background: #f4e8e8;
+            border-radius: 12px;
+            min-height: 280px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .map-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .map-box p {
+            color: #625656;
+            margin-bottom: 18px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #650505;
+            color: white;
+            padding: 12px 22px;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: #850b0b;
+        }
+
+        .note {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #777;
+        }
+
+        footer {
+            background: #300303;
+            color: #eadada;
+            text-align: center;
+            padding: 25px 15px;
+            font-size: 13px;
+        }
+
+        footer a {
+            color: white;
+            margin: 0 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+            }
+
+            nav {
+                justify-content: center;
+                gap: 14px;
+            }
+
+            .location-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="sample2.html" class="logo">NOVA</a>
+
+        <nav>
+            <a href="sample2.html">Home</a>
+            <a href="all-products.html">All Products</a>
+            <a href="categories.html">Categories</a>
+            <a href="about.html">About NOVA</a>
+            <a href="location.html">Location</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Find NOVA</h1>
+        <p>One platform. Countless possibilities.</p>
+    </section>
+
+    <main class="container">
+        <div class="location-layout">
+
+            <section class="location-info">
+                <h2>Our Location</h2>
+
+                <p>
+                    NOVA brings together its own technology products
+                    and products from third-party brands and retailers
+                    through one online marketplace.
+                </p>
+
+                <p>
+                    You can explore our products and shop online
+                    from wherever you are.
+                </p>
+
+                <div class="location-box">
+                    <h2>Visit NOVA Online</h2>
+                    <p>
+                        <strong>Platform:</strong> NOVA Online Store
+                    </p>
+                    <p>
+                        <strong>Availability:</strong> Shop online
+                    </p>
+                    <a href="all-products.html" class="button">
+                        Explore Products
+                    </a>
+                </div>
+            </section>
+
+            <section class="map-box">
+                <div class="map-icon">📍</div>
+                <h2>Explore NOVA</h2>
+                <p>
+                    Discover NOVA products and explore offerings
+                    from different brands in our marketplace.
+                </p>
+                <a href="all-products.html" class="button">
+                    Start Shopping
+                </a>
+            </section>
+
+        </div>
+
+        <p class="note">
+            NOVA's physical office or store address has not yet been
+            specified. This page currently represents our online platform.
+        </p>
+    </main>
+
+    <footer>
+        <p>© 2026 NOVA. All rights reserved.</p>
+        <p style="margin-top: 8px;">
+            <a href="about.html">About NOVA</a>
+            <a href="location.html">Location</a>
+            <a href="contact.html">Contact Us</a>
+        </p>
+    </footer>
+
+</body>
+</html></escape>

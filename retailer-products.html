@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NOVA - Manage Products</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7eeee;
+            color: #333;
+        }
+
+        /* HEADER */
+
+        .header {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: #650505;
+            letter-spacing: 2px;
+        }
+
+        .retailer-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .retailer-name {
+            font-weight: bold;
+        }
+
+        .logout-button {
+            padding: 9px 16px;
+            border: 1px solid #650505;
+            background: white;
+            color: #650505;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .logout-button:hover {
+            background: #f8eeee;
+        }
+
+        /* LAYOUT */
+
+        .dashboard {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 230px;
+            background: white;
+            border-right: 1px solid #eee;
+            padding: 30px 20px;
+        }
+
+        .sidebar h2 {
+            color: #650505;
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            color: #444;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #f7eeee;
+            color: #650505;
+            font-weight: bold;
+        }
+
+        /* MAIN */
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-x: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            color: #650505;
+        }
+
+        .page-header p {
+            margin-top: 8px;
+            color: #666;
+        }
+
+        .add-button {
+            padding: 12px 20px;
+            background: #650505;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-button:hover {
+            background: #4d0404;
+        }
+
+        /* PRODUCT TABLE */
+
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid #eee;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th {
+            background: #f8eeee;
+            color: #650505;
+            text-align: left;
+            padding: 16px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px 16px;
+            border-top: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .product-image {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            border-radius: 6px;
+            border: 1px solid #eee;
+            background: white;
+        }
+
+        .product-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .category {
+            color: #666;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #650505;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .edit-button,
+        .delete-button {
+            padding: 8px 13px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .edit-button {
+            background: white;
+            color: #650505;
+            border: 1px solid #650505;
+        }
+
+        .edit-button:hover {
+            background: #f8eeee;
+        }
+
+        .delete-button {
+            background: #650505;
+            color: white;
+            border: 1px solid #650505;
+        }
+
+        .delete-button:hover {
+            background: #4d0404;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #b00020;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="logo">
+            NOVA
+        </div>
+
+        <div class="retailer-info">
+
+            <span
+                class="retailer-name"
+                id="retailerName"
+            >
+                Retailer
+            </span>
+
+            <button
+                class="logout-button"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <div class="dashboard">
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <h2>
+                Seller Panel
+            </h2>
+
+            <a href="retailer-dashboard.html">
+                Dashboard
+            </a>
+
+            <a
+                href="retailer-products.html"
+                class="active"
+            >
+                Products
+            </a>
+
+            <a href="retailer-orders.html">
+                Orders
+            </a>
+
+            <a href="retailer-inventory.html">
+                Inventory
+            </a>
+
+            <a href="retailer-reviews.html">
+                Reviews
+            </a>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main-content">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Manage Products
+                    </h1>
+
+                    <p>
+                        View and manage your NOVA products.
+                    </p>
+
+                </div>
+
+                <button
+                    class="add-button"
+                    onclick="alert('Add Product coming next!')"
+                >
+                    + Add Product
+                </button>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Image
+                            </th>
+
+                            <th>
+                                Product
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Price
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="productTable">
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="loading"
+                            >
+                                Loading products...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        /* CHECK RETAILER LOGIN */
+
+        const retailer =
+            JSON.parse(
+                localStorage.getItem("novaRetailer")
+            );
+
+
+        if (!retailer) {
+
+            window.location.href =
+                "retailer-login.html";
+
+        }
+
+
+        if (retailer) {
+
+            document.getElementById(
+                "retailerName"
+            ).textContent =
+                retailer.name;
+
+        }
+
+
+        /* LOAD PRODUCTS */
+
+        async function loadProducts() {
+
+            const productTable =
+                document.getElementById(
+                    "productTable"
+                );
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/products"
+                    );
+
+                const products =
+                    await response.json();
+
+
+                productTable.innerHTML = "";
+
+
+                if (products.length === 0) {
+
+                    productTable.innerHTML = `
+                        <tr>
+                            <td
+                                colspan="5"
+                                class="loading"
+                            >
+                                No products found.
+                            </td>
+                        </tr>
+                    `;
+
+                    return;
+
+                }
+
+
+                products.forEach(
+                    function(product) {
+
+                        const row =
+                            document.createElement(
+                                "tr"
+                            );
+
+
+                        row.innerHTML = `
+
+                            <td>
+
+                                <img
+                                    src="${product.image}"
+                                    alt="${product.name}"
+                                    class="product-image"
+                                    onerror="this.src='logo.png'"
+                                >
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="product-name">
+                                    ${product.name}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="category">
+                                    ${product.category}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="price">
+                                    ₹${Number(
+                                        product.price
+                                    ).toLocaleString("en-IN")}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="action-buttons">
+
+                                    <button
+                                        class="edit-button"
+                                        onclick="editProduct(${product.id})"
+                                    >
+                                        Edit
+                                    </button>
+
+                                    <button
+                                        class="delete-button"
+                                        onclick="deleteProduct(${product.id})"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        `;
+
+
+                        productTable.appendChild(
+                            row
+                        );
+
+                    }
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Could not load products:",
+                    error
+                );
+
+                productTable.innerHTML = `
+                    <tr>
+                        <td
+                            colspan="5"
+                            class="error"
+                        >
+                            Could not load products.
+                        </td>
+                    </tr>
+                `;
+
+            }
+
+        }
+
+
+        /* PLACEHOLDER ACTIONS */
+
+        function editProduct(id) {
+
+            alert(
+                "Edit Product " +
+                id +
+                " coming next!"
+            );
+
+        }
+
+
+        function deleteProduct(id) {
+
+            alert(
+                "Delete Product " +
+                id +
+                " coming next!"
+            );
+
+        }
+
+
+        /* LOGOUT */
+
+        function logout() {
+
+            localStorage.removeItem(
+                "novaRetailer"
+            );
+
+            window.location.href =
+                "retailer-login.html";
+
+        }
+
+
+        loadProducts();
+
+    </script>
+
+</body>
+
+</html>

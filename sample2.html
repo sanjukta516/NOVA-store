@@ -1,0 +1,1459 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>N O V A</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+            .nova {
+    font-family: Georgia, serif;
+    color: #4d0404ce;
+    font-weight: bold;
+}
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            height: 75px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+
+            position: relative;
+            z-index: 10;
+        }
+
+
+        /* Hamburger */
+
+        .menu-container {
+            position: relative;
+        }
+
+        .menu-button {
+            font-size: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* =========================
+   SIDE MENU
+========================= */
+
+.menu-dropdown {
+    display: block;
+
+    position: fixed;
+
+    top: 0;
+    left: -300px;
+
+    width: 300px;
+    height: 100vh;
+
+    background: white;
+
+    box-shadow: 4px 0 15px rgba(0,0,0,0.25);
+
+    padding-top: 80px;
+
+    z-index: 1000;
+
+    transition: left 0.3s ease;
+
+     overflow-y: auto;
+}
+
+.menu-dropdown.open {
+    left: 0;
+}
+
+.menu-dropdown a {
+    display: block;
+
+    padding: 18px 25px;
+
+    color: #222;
+
+    text-decoration: none;
+
+    font-size: 17px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.menu-dropdown a:hover {
+    background: #f2f2f2;
+}
+.menu-title {
+    font-size: 28px;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    color: #4d0404;
+    padding: 0 25px 20px;
+}
+
+.menu-divider {
+    height: 1px;
+    background: #ddd;
+    margin: 10px 20px;
+}
+
+/* Close button */
+
+.menu-close {
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    background: none;
+    border: none;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+.menu-category {
+    width: 100%;
+}
+
+.categories-toggle {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 14px 20px;
+
+    border: none;
+    background: none;
+
+    color: inherit;
+
+    font-size: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.categories-toggle:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.subcategory-menu {
+    display: none;
+
+    padding-left: 20px;
+}
+
+.subcategory-menu a {
+    display: block;
+
+    padding: 10px 20px;
+
+    text-decoration: none;
+
+    color: inherit;
+
+    font-size: 14px;
+}
+
+.subcategory-menu a:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.subcategory-menu.open {
+    display: block;
+}
+
+#categoryArrow {
+    transition: transform 0.25s ease;
+}
+
+#categoryArrow.rotate {
+    transform: rotate(180deg);
+}
+
+/* Dark background behind menu */
+
+.menu-overlay {
+    display: none;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    background: rgba(0,0,0,0.45);
+
+    z-index: 999;
+}
+
+.menu-overlay.show {
+    display: block;
+}
+
+
+        /* =========================
+           COMPANY
+        ========================= */
+
+        .company {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    position: absolute;
+    left: 100px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+        .company img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .company h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+
+        /* =========================
+           CONTACT
+        ========================= */
+
+        .contact-container {
+            position: relative;
+        }
+
+        .contact-button {
+            background: white;
+            border: none;
+
+            font-size: 16px;
+
+            padding: 10px 15px;
+
+            cursor: pointer;
+        }
+
+        .contact-dropdown {
+            display: none;
+
+            position: absolute;
+
+            right: 0;
+            top: 45px;
+
+            width: 250px;
+
+            background: white;
+
+            padding: 15px;
+
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+            border-radius: 5px;
+        }
+
+        .contact-dropdown a {
+            display: block;
+
+            margin-top: 10px;
+
+            color: #222;
+            text-decoration: none;
+        }
+
+    /* =========================
+   SEARCH BAR
+========================= */
+
+.search-container {
+    position:fixed;
+
+    left: 50%;
+    top: 34px;
+
+    transform: translate(-50%, -50%);
+
+    width: 420px;
+
+    z-index: 1000;
+}
+
+.search-box {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 55px 0 20px;
+
+    border: 2px solid #4d0404;
+
+    border-radius: 25px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    box-sizing: border-box;
+
+    background: white;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.12);
+
+    transition: 0.25s ease;
+}
+
+.search-box:focus {
+    border-color: #700000;
+
+    box-shadow:
+        0 5px 20px rgba(77, 4, 4, 0.22);
+}
+
+.search-button {
+    position: absolute;
+    right: 5px;
+    top: 3px;
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #4d0404;
+    color: white;
+
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.search-button:hover {
+    background: #300000;
+}
+        /* =========================
+           HERO CAROUSEL
+        ========================= */
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 800px;
+            overflow: hidden;
+
+            background: linear-gradient(
+                135deg,
+                #f8f8fa 0%,
+                #ffffff 55%,
+                #f1f3f8 100%
+    );
+}
+
+
+        /* Individual slides */
+
+        .slide {
+            display: none;
+
+            width: 100%;
+            height: 100%;
+
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+
+        /* Slide image */
+
+        .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}
+
+
+        /* Text on image */
+
+        .slide-content {
+            position: absolute;
+
+            left: 8%;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: white;
+
+            max-width: 450px;
+
+            text-shadow: 2px 2px 5px black;
+            
+        }
+
+        .slide-content h2 {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .slide-content p {
+            font-size: 20px;
+        }
+
+        .slide-content button {
+            margin-top: 15px;
+
+            padding: 12px 25px;
+
+            border: none;
+            border-radius: 5px;
+
+            background: white;
+            color: #222;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        .slide-content button:hover {
+            background: #dddddd;
+        }
+        /* =========================
+   HERO BUTTONS
+========================= */
+
+.hero-btn {
+    transition: all 0.25s ease;
+}
+
+/* Slide 1 */
+
+.hero-btn-1 {
+    background: white;
+    color: #222;
+    border-radius: 5px;
+    padding: 12px 25px;
+}
+
+.hero-btn-1:hover {
+    background: #4d0404;
+    color: white;
+}
+
+
+/* Slide 2 */
+
+.hero-btn-2 {
+    background: #4d0404;
+    color: white;
+    border-radius: 25px;
+    padding: 12px 28px;
+}
+
+.hero-btn-2:hover {
+    background: white;
+    color: #4d0404;
+}
+
+
+/* Slide 3 */
+
+.hero-btn-3 {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    border-radius: 3px;
+    padding: 11px 27px;
+}
+
+.hero-btn-3:hover {
+    background: white;
+    color: #222;
+}
+
+
+        /* =========================
+           ARROWS
+        ========================= */
+
+        .prev,
+        .next {
+
+            position: absolute;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 45px;
+            height: 60px;
+
+            background: rgba(0,0,0,0.6);
+
+            color: white;
+
+            border: none;
+
+            font-size: 30px;
+
+            cursor: pointer;
+
+            z-index: 5;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background: rgba(0,0,0,0.9);
+        }
+
+
+        /* =========================
+           CAROUSEL DOTS
+        ========================= */
+
+        .dots {
+
+            position: absolute;
+
+            bottom: 20px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            display: flex;
+
+            gap: 10px;
+
+            z-index: 5;
+        }
+
+        .dot {
+
+            width: 12px;
+            height: 12px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            opacity: 0.5;
+
+            cursor: pointer;
+        }
+
+        .dot.active {
+            opacity: 1;
+        }
+
+
+        /* =========================
+           BELOW CAROUSEL
+        ========================= */
+
+        .welcome {
+            text-align: center;
+            background: white;
+            padding: 50px 20px;
+        }
+
+        .welcome h2 {
+            font-size: 32px;
+        }
+
+        .welcome p {
+            font-size: 18px;
+            color: #555;
+        }
+        /* =========================
+   RECOMMENDED PRODUCTS
+========================= */
+
+.recommended {
+    background: #f7eeee;
+    padding: 50px 30px;
+    text-align: center;
+}
+
+.recommended h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.recommended-subtitle {
+    color: #666;
+    font-size: 17px;
+    margin-bottom: 35px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.product-card {
+    
+    background: #f8f8f8;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: left;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    background: white;
+}
+
+.product-info {
+    padding: 18px;
+}
+
+.product-info h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.product-category {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.product-description {
+    color: #555;
+    font-size: 14px;
+    min-height: 40px;
+}
+
+.product-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #4d0404ce;
+    margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #222;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 20px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 0 15px;
+            }
+
+            .company h1 {
+                font-size: 18px;
+            }
+
+            .company img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .carousel {
+                height: 450px;
+            }
+
+            .slide-content {
+                left: 10%;
+                max-width: 300px;
+            }
+
+            .slide-content h2 {
+                font-size: 30px;
+            }
+
+            .slide-content p {
+                font-size: 16px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+
+        <!-- Hamburger Menu -->
+
+        <div class="menu-container">
+
+    <button
+        class="menu-button"
+        onclick="toggleMenu()"
+    >
+        ☰
+    </button>
+
+
+    <!-- Dark overlay -->
+
+    <div
+        class="menu-overlay"
+        id="menuOverlay"
+        onclick="toggleMenu()"
+    ></div>
+
+
+    <!-- Side menu -->
+
+    <div
+    class="menu-dropdown"
+    id="menuDropdown"
+>
+
+    <button
+        class="menu-close"
+        onclick="toggleMenu()"
+    >
+        ✕
+    </button>
+
+
+    <div class="menu-title">
+        N O V A
+    </div>
+
+
+    <a href="sample2.html">
+         Home
+    </a>
+
+    <div class="menu-category">
+
+    <button
+        class="categories-toggle"
+        onclick="toggleCategories()"
+    >
+        <span>Categories</span>
+        <span id="categoryArrow">▾</span>
+    </button>
+
+
+    <div
+        class="subcategory-menu"
+        id="subcategoryMenu"
+    >
+
+        <a href="search.html?q=Smartphone">
+             Smartphones
+        </a>
+
+        <a href="search.html?q=Earbuds">
+             Earbuds
+        </a>
+
+        <a href="search.html?q=Smartwatch">
+             Smartwatches
+        </a>
+
+        <a href="search.html?q=Laptop">
+             Laptops
+        </a>
+
+        <a href="search.html?q=Tablet">
+             Tablets
+        </a>
+
+        <a href="search.html?q=Audio">
+             Audio
+        </a>
+
+        <a href="search.html?q=Accessories">
+             Accessories
+        </a>
+
+        <a href="search.html?q=Smart Home">
+             Smart Home
+        </a>
+
+    </div>
+
+</div>
+
+    <a href="all-products.html">
+         All Products
+    </a>
+
+    <a href="#">
+         Recommended
+    </a>
+
+
+    <div class="menu-divider"></div>
+
+
+    <a href="login.html">
+         Login
+    </a>
+
+    <a href="account.html">
+         My Account
+    </a>
+
+    <a href="orders.html">
+         My Orders
+    </a>
+
+    <a href="cart.html">
+         Cart
+    </a>
+    <a href="wishlist.html">
+         Wishlist
+    </a>
+
+    <div class="menu-divider"></div>
+
+
+    <a href="about.html">
+         About NOVA
+    </a>
+
+    <a href="location.html">
+         Location
+    </a>
+
+    <a href="contact.html">
+         Contact Us
+    </a>
+
+</div>
+
+</div>
+
+
+        <!-- Company -->
+
+        <div class="company">
+
+            <img src="logo.png" alt="Company Logo">
+
+            <h1><span class="nova">NOVA</span></h1>
+
+        </div>
+
+
+        <!-- Contact -->
+
+        <div class="contact-container">
+
+            <button class="contact-button" onclick="toggleContact()">
+                Contact Us ▼
+            </button>
+
+            <div class="contact-dropdown" id="contactDropdown">
+
+                <p>
+                    <strong>Email:</strong><br>
+                    company@email.com
+                </p>
+
+                <p>
+                    <strong>Phone:</strong><br>
+                    +91 XXXXX XXXXX
+                </p>
+
+                <a href="#">WhatsApp</a>
+
+                <a href="#">Instagram</a>
+
+                <a href="#">Facebook</a>
+
+            </div>
+            <!-- Search -->
+
+<div class="search-container">
+
+    <input
+        type="text"
+        class="search-box"
+        id="searchBox"
+        placeholder="Search products..."
+    >
+
+    <button
+        class="search-button"
+        onclick="searchProducts()"
+    >
+        🔍︎
+    </button>
+
+</div>
+
+        </div>
+        
+    </header>
+
+
+
+    <!-- =========================
+         CAROUSEL
+    ========================= -->
+
+    <section class="carousel">
+        <div class="slide active">
+    <img src="" alt="">
+    
+    <div class="slide-content">
+        <h2></h2>
+        <p></p>
+        <button>Explore</button>
+    </div>
+</div>
+
+<div class="slide">
+    <img src="" alt="">
+    
+    <div class="slide-content">
+        <h2></h2>
+        <p></p>
+        <button>GET IT NOW</button>
+    </div>
+</div>
+
+<div class="slide">
+    <img src="" alt="">
+    
+    <div class="slide-content">
+        <h2></h2>
+        <p></p>
+        <button>HOT DEALLL</button>
+    </div>
+</div>
+
+        
+
+        
+
+        </div>
+
+
+
+        <!-- LEFT ARROW -->
+
+        <button class="prev" onclick="changeSlide(-1)">
+            ❮
+        </button>
+
+
+        <!-- RIGHT ARROW -->
+
+        <button class="next" onclick="changeSlide(1)">
+            ❯
+        </button>
+
+
+        <!-- DOTS -->
+
+        <div class="dots">
+
+            <span class="dot active" onclick="goToSlide(0)"></span>
+
+            <span class="dot" onclick="goToSlide(1)"></span>
+
+            <span class="dot" onclick="goToSlide(2)"></span>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         WELCOME SECTION
+    ========================= -->
+
+    <section class="welcome">
+
+        <h2>Welcome to NOVA</h2>
+
+        <p>
+            Beyond Limits.
+        </p>
+
+    </section>
+    <!-- =========================
+     RECOMMENDED PRODUCTS
+========================= -->
+
+<section class="recommended">
+
+    <h2>Recommended Products</h2>
+
+    <p class="recommended-subtitle">
+        Handpicked just for you
+    </p>
+
+    <div class="product-grid" id="productGrid">
+
+        <!-- Products will be loaded from MySQL -->
+
+    </div>
+
+</section>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+            © 2026 Company Name. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+        
+        /* =========================
+   PRODUCT SEARCH
+========================= */
+
+async function searchProducts() {
+
+    const searchBox =
+        document.getElementById("searchBox");
+
+    const query =
+        searchBox.value.trim();
+
+    if (query === "") {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "/api/search?q=" +
+            encodeURIComponent(query)
+        );
+
+        const products = await response.json();
+
+        if (products.length === 0) {
+
+            alert("No products found for: " + query);
+
+            return;
+        }
+
+        // Open the search results page
+        window.location.href =
+            "search.html?q=" +
+            encodeURIComponent(query);
+
+    } catch (error) {
+
+        console.error(
+            "Search error:",
+            error
+        );
+
+        alert("Something went wrong while searching.");
+
+    }
+}
+
+
+document
+    .getElementById("searchBox")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+
+            searchProducts();
+
+        }
+            
+    });
+    /* =========================
+   HERO PRODUCTS
+========================= */
+
+async function loadHeroProducts() {
+
+    try {
+
+        const response =
+            await fetch("/api/hero-products");
+
+        const products =
+            await response.json();
+
+        const slides =
+            document.querySelectorAll(".slide");
+
+        products.forEach(function(product, index) {
+
+            const slide = slides[index];
+
+            const image =
+                slide.querySelector("img");
+
+            const title =
+                slide.querySelector("h2");
+
+            const description =
+                slide.querySelector("p");
+            const button =
+                slide.querySelector("button");
+            image.src =
+                product.image;
+
+            image.alt =
+                product.name;
+
+            title.textContent =
+                product.name;
+
+            description.textContent =
+                product.description;
+            button.onclick = function() {
+                console.log("Hero button clicked:", product.id);
+
+            window.location.href =
+                "product.html?id=" + product.id;
+
+};
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Could not load hero products:",
+            error
+        );
+
+    }
+
+}
+
+loadHeroProducts();
+
+
+let currentSlide = 0;
+        
+
+        const slides = document.querySelectorAll(".slide");
+
+        const dots = document.querySelectorAll(".dot");
+
+
+        /* =========================
+           SHOW SLIDE
+        ========================= */
+
+        function showSlide(index) {
+
+            /* If we go past the last slide */
+
+            if (index >= slides.length) {
+                currentSlide = 0;
+            }
+
+            /* If we go before first slide */
+
+            else if (index < 0) {
+                currentSlide = slides.length - 1;
+            }
+
+            else {
+                currentSlide = index;
+            }
+
+
+            /* Hide every slide */
+
+            slides.forEach(function(slide) {
+                slide.classList.remove("active");
+            });
+
+
+            /* Remove active dot */
+
+            dots.forEach(function(dot) {
+                dot.classList.remove("active");
+            });
+
+
+            /* Show current slide */
+
+            slides[currentSlide].classList.add("active");
+
+            dots[currentSlide].classList.add("active");
+
+        }
+
+
+        /* =========================
+           ARROW BUTTONS
+        ========================= */
+
+        function changeSlide(direction) {
+
+            showSlide(currentSlide + direction);
+
+        }
+
+
+        /* =========================
+           DOT BUTTONS
+        ========================= */
+
+        function goToSlide(index) {
+
+            showSlide(index);
+
+        }
+
+
+        /* =========================
+           AUTOMATIC CAROUSEL
+        ========================= */
+
+        setInterval(function() {
+
+            changeSlide(1);
+
+        }, 5000);
+
+
+        /* =========================
+           HAMBURGER MENU
+        ========================= */
+
+        function toggleMenu() {
+
+        const menu =
+            document.getElementById("menuDropdown");
+
+        const overlay =
+            document.getElementById("menuOverlay");
+
+        menu.classList.toggle("open");
+
+        overlay.classList.toggle("show");
+
+}
+
+
+        /* =========================
+           CONTACT DROPDOWN
+        ========================= */
+
+        function toggleContact() {
+
+            const contact =
+                document.getElementById("contactDropdown");
+
+            if (contact.style.display === "block") {
+
+                contact.style.display = "none";
+
+            }
+
+            else {
+
+                contact.style.display = "block";
+
+            }
+
+        }
+        /* =========================
+   RECOMMENDED PRODUCTS
+========================= */
+        function toggleCategories() {
+
+    const menu =
+        document.getElementById("subcategoryMenu");
+
+    const arrow =
+        document.getElementById("categoryArrow");
+
+
+    menu.classList.toggle("open");
+
+    arrow.classList.toggle("rotate");
+
+}
+
+async function loadRecommendedProducts() {
+
+    try {
+
+        const response = await fetch("/api/recommended-products");
+
+        const products = await response.json();
+
+        const productGrid = document.getElementById("productGrid");
+
+        productGrid.innerHTML = "";
+
+        products.forEach(function(product) {
+
+            const card = document.createElement("div");
+
+            card.className = "product-card";
+            card.onclick = function() {
+
+    window.location.href =
+        "product.html?id=" + product.id;
+
+};
+
+            card.innerHTML = `
+                <img 
+                    src="${product.image}" 
+                    alt="${product.name}"
+                    onerror="this.src='logo.png'"
+                >
+
+                <div class="product-info">
+
+                    <h3>${product.name}</h3>
+
+                    <div class="product-category">
+                        ${product.category}
+                    </div>
+
+                    <div class="product-description">
+                        ${product.description}
+                    </div>
+
+                    <div class="product-price">
+                        ₹${Number(product.price).toLocaleString("en-IN")}
+                    </div>
+
+                </div>
+            `;
+
+            productGrid.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Could not load recommended products:",
+            error
+        );
+
+    }
+
+}
+
+loadRecommendedProducts();
+    </script>
+
+
+</body>
+
+</html>

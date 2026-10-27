@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NOVA - Wishlist</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            height: 75px;
+            background: white;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .company {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 30px;
+        }
+
+        .company img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .company h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .nova {
+            font-family: Georgia, serif;
+            color: #4d0404ce;
+            font-weight: bold;
+        }
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .wishlist-page {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 30px;
+        }
+
+        .wishlist-title {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           PRODUCTS
+        ========================= */
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .wishlist-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+            transition: transform 0.2s;
+        }
+
+        .wishlist-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .wishlist-image {
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        .wishlist-name {
+            font-size: 19px;
+            margin: 15px 0 8px;
+            cursor: pointer;
+        }
+
+        .wishlist-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4d0404ce;
+            margin-bottom: 15px;
+        }
+
+        .wishlist-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .wishlist-buttons button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .cart-button {
+            background: #4d0404ce;
+            color: white;
+            border: none;
+        }
+
+        .remove-button {
+            background: white;
+            color: #4d0404ce;
+            border: 1px solid #4d0404ce;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty-wishlist {
+            background: white;
+            padding: 80px 20px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .empty-wishlist h2 {
+            font-size: 28px;
+        }
+
+        .empty-wishlist p {
+            color: #777;
+            font-size: 16px;
+        }
+
+        .shop-button {
+            margin-top: 15px;
+            padding: 13px 25px;
+            border: none;
+            border-radius: 6px;
+            background: #4d0404ce;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .wishlist-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wishlist-page {
+                padding: 0 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <header>
+
+        <button
+            class="back-button"
+            onclick="history.back()"
+        >
+            ←
+        </button>
+
+        <div class="company">
+
+            <img
+                src="logo.png"
+                alt="NOVA logo"
+            >
+
+            <h1>
+                <span class="nova">NOVA</span>
+            </h1>
+
+        </div>
+
+    </header>
+
+
+    <main class="wishlist-page">
+
+        <h1 class="wishlist-title">
+            My Wishlist ❤️
+        </h1>
+
+        <div
+            class="wishlist-grid"
+            id="wishlistGrid"
+        ></div>
+
+    </main>
+
+
+    <script>
+
+        function loadWishlist() {
+
+            const wishlist =
+                JSON.parse(
+                    localStorage.getItem("novaWishlist")
+                ) || [];
+
+            const grid =
+                document.getElementById(
+                    "wishlistGrid"
+                );
+
+
+            if (wishlist.length === 0) {
+
+                grid.innerHTML = `
+                    <div class="empty-wishlist">
+
+                        <h2>Your wishlist is empty ❤️</h2>
+
+                        <p>
+                            Save products you love and
+                            find them here later.
+                        </p>
+
+                        <button
+                            class="shop-button"
+                            onclick="window.location.href='all-products.html'"
+                        >
+                            Continue Shopping
+                        </button>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            grid.innerHTML = "";
+
+
+            wishlist.forEach(product => {
+
+                const card =
+                    document.createElement("div");
+
+                card.className =
+                    "wishlist-card";
+
+
+                card.innerHTML = `
+
+                    <img
+                        class="wishlist-image"
+                        src="${product.image}"
+                        alt="${product.name}"
+                        onclick="openProduct('${product.id}')"
+                    >
+
+                    <h2
+                        class="wishlist-name"
+                        onclick="openProduct('${product.id}')"
+                    >
+                        ${product.name}
+                    </h2>
+
+                    <div class="wishlist-price">
+                        ${product.price}
+                    </div>
+
+                    <div class="wishlist-buttons">
+
+                        <button
+                            class="cart-button"
+                            onclick="addWishlistToCart('${product.id}')"
+                        >
+                            Add to Cart
+                        </button>
+
+                        <button
+                            class="remove-button"
+                            onclick="removeFromWishlist('${product.id}')"
+                        >
+                            Remove
+                        </button>
+
+                    </div>
+
+                `;
+
+                grid.appendChild(card);
+
+            });
+
+        }
+
+
+        function openProduct(id) {
+
+            window.location.href =
+                "product.html?id=" + id;
+
+        }
+
+
+        function removeFromWishlist(id) {
+
+            let wishlist =
+                JSON.parse(
+                    localStorage.getItem("novaWishlist")
+                ) || [];
+
+            wishlist =
+                wishlist.filter(
+                    product => product.id !== id
+                );
+
+            localStorage.setItem(
+                "novaWishlist",
+                JSON.stringify(wishlist)
+            );
+
+            loadWishlist();
+
+        }
+
+
+        function addWishlistToCart(id) {
+
+            const wishlist =
+                JSON.parse(
+                    localStorage.getItem("novaWishlist")
+                ) || [];
+
+            const product =
+                wishlist.find(
+                    item => item.id === id
+                );
+
+            if (!product) return;
+
+
+            let cart =
+                JSON.parse(
+                    localStorage.getItem("novaCart")
+                ) || [];
+
+
+            const existingProduct =
+                cart.find(
+                    item => item.id === product.id
+                );
+
+
+            if (existingProduct) {
+
+                existingProduct.quantity += 1;
+
+            } else {
+
+                product.quantity = 1;
+
+                cart.push(product);
+
+            }
+
+
+            localStorage.setItem(
+                "novaCart",
+                JSON.stringify(cart)
+            );
+
+
+            alert(
+                product.name +
+                " added to cart!"
+            );
+
+        }
+
+
+        loadWishlist();
+
+    </script>
+
+</body>
+
+</html>

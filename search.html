@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NOVA - Search</title>
+
+    
+
+    <style>
+        .filter-bar {
+    max-width: 1225px;
+    margin: 25px auto 30px;
+
+    padding: 18px 22px;
+
+    background: white;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    border-bottom: 2px solid #4d0404ce;
+}
+
+.filter-title {
+    font-size: 17px;
+    font-weight: bold;
+
+    color: #4d0404ce;
+}
+
+.filter-bar select {
+    padding: 10px 40px 10px 14px;
+
+    border: 1px solid #4d0404ce;
+    border-radius: 5px;
+
+    background: white;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    outline: none;
+}
+
+.filter-bar select:focus {
+    border-color: #300000;
+}
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            height: 75px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 30px;
+
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .company {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            position: absolute;
+            left: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .company img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .nova {
+            font-family: Georgia, serif;
+            color: #4d0404ce;
+            font-weight: bold;
+        }
+
+        .company h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-button {
+            background: none;
+            border: none;
+
+            font-size: 25px;
+
+            cursor: pointer;
+        }
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .search-container {
+            position: absolute;
+
+            right: 230px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 300px;
+        }
+
+        .search-box {
+            width: 100%;
+            height: 40px;
+
+            padding: 0 50px 0 15px;
+
+            border: 1px solid #4d0404;
+            border-radius: 22px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        .search-button {
+            position: absolute;
+
+            right: 5px;
+            top: 3px;
+
+            width: 34px;
+            height: 34px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: #4d0404;
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+        /* =========================
+           PAGE TITLE
+        ========================= */
+
+        .search-heading {
+            padding: 40px 50px 10px;
+        }
+
+        .search-heading h2 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .search-heading p {
+            color: #666;
+            margin-top: 8px;
+        }
+        .results-layout {
+    display: grid;
+
+    grid-template-columns: 230px 1fr;
+
+    gap: 30px;
+
+    max-width: 1400px;
+
+    margin: auto;
+
+    padding: 20px 50px 60px;
+}
+
+
+.filter-sidebar {
+    background: white;
+
+    padding: 25px;
+
+    align-self: start;
+
+    border-top: 3px solid #4d0404ce;
+}
+
+
+.filter-sidebar h2 {
+    margin: 0 0 25px;
+
+    font-size: 24px;
+
+    color: #4d0404ce;
+}
+
+
+.filter-section {
+    padding: 22px 0;
+
+    border-top: 1px solid #ddd;
+}
+
+
+.filter-section h3 {
+    margin: 0 0 15px;
+
+    font-size: 16px;
+}
+
+
+.filter-section label {
+    display: block;
+
+    margin-bottom: 13px;
+
+    font-size: 14px;
+
+    color: #555;
+
+    cursor: pointer;
+}
+
+
+.filter-section input {
+    margin-right: 8px;
+
+    accent-color: #4d0404;
+}
+
+
+.results-products {
+    min-width: 0;
+}
+
+
+.results-products .product-grid {
+    padding: 0;
+
+    max-width: none;
+}
+
+        /* =========================
+           PRODUCT GRID
+        ========================= */
+
+        .product-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 25px;
+
+            padding: 25px 50px 60px;
+
+            max-width: 1400px;
+
+            margin: auto;
+        }
+
+        .product-card {
+
+            background: white;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.12);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 7px 18px rgba(0,0,0,0.2);
+        }
+
+        .product-card img {
+
+            width: 100%;
+            height: 220px;
+
+            object-fit: contain;
+
+            background: white;
+        }
+
+        .product-info {
+
+            padding: 18px;
+        }
+
+        .product-info h3 {
+
+            margin: 0 0 8px;
+
+            font-size: 20px;
+        }
+
+        .category {
+
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 10px;
+        }
+
+        .description {
+
+            color: #555;
+
+            font-size: 14px;
+
+            line-height: 1.4;
+
+            min-height: 40px;
+        }
+
+        .price {
+
+            margin-top: 12px;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            color: #4d0404ce;
+        }
+
+        /* =========================
+           NO RESULTS
+        ========================= */
+
+        .no-results {
+
+            text-align: center;
+
+            padding: 80px 20px;
+
+            font-size: 20px;
+
+            color: #666;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .product-grid {
+
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+
+            }
+
+        }
+
+        @media (max-width: 750px) {
+
+            .product-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                padding: 20px;
+            }
+
+            .search-container {
+
+                right: 20px;
+
+                width: 200px;
+            }
+
+            .company {
+
+                left: 70px;
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .product-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+
+                position: relative;
+
+                right: auto;
+                top: auto;
+
+                transform: none;
+
+                width: 100%;
+            }
+
+        }
+        /* PRICE RANGE SLIDER */
+
+.price-slider {
+    margin-top: 10px;
+}
+
+.price-values {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+}
+
+.slider-track {
+    position: relative;
+    height: 25px;
+}
+
+/* Base grey track */
+.slider-track::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    top: 10px;
+    height: 4px;
+    background: #ddd;
+    border-radius: 5px;
+}
+
+/* Both sliders */
+.slider-track input[type="range"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 25px;
+    margin: 0;
+    appearance: none;
+    background: transparent;
+    pointer-events: none;
+}
+
+/* Chrome / Edge track */
+.slider-track input[type="range"]::-webkit-slider-runnable-track {
+    background: transparent;
+}
+
+/* Chrome / Edge handles */
+.slider-track input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #650505;
+    border: 2px solid white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    pointer-events: auto;
+    margin-top: 2px;
+}
+
+/* Firefox */
+.slider-track input[type="range"]::-moz-range-track {
+    background: transparent;
+}
+
+.slider-track input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #650505;
+    border: 2px solid white;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+/* Layering */
+#minRange {
+    z-index: 3;
+}
+
+#maxRange {
+    z-index: 2;
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <button
+            class="back-button"
+            onclick="goBack()"
+        >
+            ←
+        </button>
+
+
+        <div class="company">
+
+            <img
+                src="logo.png"
+                alt="NOVA logo"
+            >
+
+            <h1>
+                <span class="nova">
+                    NOVA
+                </span>
+            </h1>
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-container">
+
+            <input
+                type="text"
+                class="search-box"
+                id="searchBox"
+                placeholder="Search products..."
+            >
+
+            <button
+                class="search-button"
+                onclick="searchProducts()"
+            >
+                🔍︎
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         SEARCH HEADING
+    ========================= -->
+
+    <section class="search-heading">
+
+        <h2 id="searchTitle">
+            Search Results
+        </h2>
+
+        <p id="resultCount"></p>
+
+    </section>
+
+
+    <!-- =========================
+         PRODUCTS
+    ========================= -->
+
+    <main>
+        <main>
+
+    <div class="results-layout">
+
+        <aside class="filter-sidebar">
+
+            <h2>Filter</h2>
+
+            <div class="filter-section">
+
+                <h3>Category</h3>
+
+                <label>
+                    <input type="checkbox">
+                    Smartphones
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    Audio
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    Accessories
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    Smart Home
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    Laptops
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    Tablets
+                </label>
+
+            </div>
+
+
+            <div class="filter-section">
+    <h3>Price</h3>
+
+    <div class="price-slider">
+        <div class="price-values">
+            <span id="minPrice">₹0</span>
+            <span id="maxPrice">₹1,00,000</span>
+        </div>
+
+        <div class="slider-track">
+            <input
+                type="range"
+                id="minRange"
+                min="0"
+                max="100000"
+                value="0"
+                step="500"
+                oninput="updatePriceSlider()"
+            >
+
+            <input
+                type="range"
+                id="maxRange"
+                min="0"
+                max="100000"
+                value="100000"
+                step="500"
+                oninput="updatePriceSlider()"
+            >
+        </div>
+    </div>
+</div>
+
+            <div class="filter-section">
+    <h3>Sort By</h3>
+
+    <label>
+        <input type="radio" name="sort" value="recommended" checked onchange="applySorting()">
+        Recommended
+    </label>
+
+    <label>
+        <input type="radio" name="sort" value="low" onchange="applySorting()">
+        Price: Low to High
+    </label>
+
+    <label>
+        <input type="radio" name="sort" value="high" onchange="applySorting()">
+        Price: High to Low
+    </label>
+</div>
+<div class="filter-section">
+    <h3>Rating</h3>
+
+    <label>
+        <input type="checkbox" class="rating-filter" value="4">
+        ⭐ 4★ & above
+    </label>
+
+    <label>
+        <input type="checkbox" class="rating-filter" value="3">
+        ⭐ 3★ & above
+    </label>
+
+    <label>
+        <input type="checkbox" class="rating-filter" value="2">
+        ⭐ 2★ & above
+    </label>
+
+    <label>
+        <input type="checkbox" class="rating-filter" value="1">
+        ⭐ 1★ & above
+    </label>
+</div>
+
+        </aside>
+
+
+        <div class="results-products">
+
+            <div
+                class="product-grid"
+                id="productGrid"
+            ></div>
+
+        </div>
+
+    </div>
+
+</main>
+
+        <div
+            class="product-grid"
+            id="productGrid"
+        >
+
+        </div>
+
+        
+
+    </main>
+
+
+    <script>
+
+
+        /* =========================
+           GET SEARCH QUERY
+        ========================= */
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const query =
+            params.get("q") || "";
+
+
+        /* =========================
+           SEARCH BOX
+        ========================= */
+
+        document.getElementById("searchBox").value =
+            query;
+
+
+        /* =========================
+           SEARCH FUNCTION
+        ========================= */
+
+        function searchProducts() {
+
+            const value =
+                document
+                    .getElementById("searchBox")
+                    .value
+                    .trim();
+
+            if (value === "") {
+                return;
+            }
+
+            window.location.href =
+                "search.html?q=" +
+                encodeURIComponent(value);
+
+        }
+
+
+        document
+            .getElementById("searchBox")
+            .addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (event.key === "Enter") {
+
+                        searchProducts();
+
+                    }
+
+                }
+            );
+
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        function goBack() {
+
+            window.history.back();
+
+        }
+
+
+        /* =========================
+           LOAD SEARCH RESULTS
+        ========================= */
+
+        async function loadSearchResults() {
+
+            const productGrid =
+                document.getElementById(
+                    "productGrid"
+                );
+
+            const searchTitle =
+                document.getElementById(
+                    "searchTitle"
+                );
+
+            const resultCount =
+                document.getElementById(
+                    "resultCount"
+                );
+
+
+            if (query === "") {
+
+                searchTitle.textContent =
+                    "Search Products";
+
+                return;
+
+            }
+
+
+            searchTitle.textContent =
+                `Search results for "${query}"`;
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/search?q=" +
+                        encodeURIComponent(query)
+                    );
+
+
+                const products =
+                    await response.json();
+
+
+                resultCount.textContent =
+                    `${products.length} product(s) found`;
+
+
+                if (products.length === 0) {
+
+                    productGrid.innerHTML = `
+                        <div class="no-results">
+                            No products found for
+                            "<strong>${query}</strong>".
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                productGrid.innerHTML = "";
+
+
+                products.forEach(
+                    function(product) {
+
+                        const card =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        card.className =
+                            "product-card";
+
+
+                        card.onclick =
+                            function() {
+
+                                window.location.href =
+                                    "product.html?id=" +
+                                    product.id;
+
+                            };
+
+
+                        card.innerHTML = `
+
+    <img
+        src="${product.image}"
+        alt="${product.name}"
+        onerror="this.src='logo.png'"
+    >
+
+    <div class="product-info">
+
+        <h3>
+            ${product.name}
+        </h3>
+
+        <div class="category">
+            ${product.category}
+        </div>
+
+        <div class="description">
+            ${product.description}
+        </div>
+
+        <div class="rating">
+            ⭐ ${Number(product.averageRating).toFixed(1)}
+        </div>
+
+        <div class="price">
+            ₹${Number(
+                product.price
+            ).toLocaleString("en-IN")}
+        </div>
+
+    </div>
+
+`;
+
+                        productGrid.appendChild(
+                            card
+                        );
+
+                    }
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Search failed:",
+                    error
+                );
+
+                productGrid.innerHTML = `
+                    <div class="no-results">
+                        Something went wrong
+                        while searching.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        loadSearchResults();
+
+        document.querySelectorAll('input[name="sort"]').forEach(function(radio) {
+    radio.addEventListener("change", applySorting);
+});
+
+        function applySorting() {
+    const selectedSort = document.querySelector(
+        'input[name="sort"]:checked'
+    ).value;
+
+    const cards = Array.from(
+        document.querySelectorAll(".product-card")
+    );
+
+    if (selectedSort === "low") {
+        cards.sort((a, b) => {
+            const priceA = Number(
+                a.querySelector(".price").textContent
+                    .replace(/[₹,]/g, "")
+            );
+
+            const priceB = Number(
+                b.querySelector(".price").textContent
+                    .replace(/[₹,]/g, "")
+            );
+
+            return priceA - priceB;
+        });
+    }
+
+    else if (selectedSort === "high") {
+        cards.sort((a, b) => {
+            const priceA = Number(
+                a.querySelector(".price").textContent
+                    .replace(/[₹,]/g, "")
+            );
+
+            const priceB = Number(
+                b.querySelector(".price").textContent
+                    .replace(/[₹,]/g, "")
+            );
+
+            return priceB - priceA;
+        });
+    }
+
+    const productGrid = document.getElementById("productGrid");
+
+    cards.forEach(card => {
+        productGrid.appendChild(card);
+    });
+}
+function updatePriceSlider() {
+    const minRange = document.getElementById("minRange");
+    const maxRange = document.getElementById("maxRange");
+
+    let minValue = Number(minRange.value);
+    let maxValue = Number(maxRange.value);
+
+    // Don't allow minimum to go above maximum
+    if (minValue > maxValue) {
+        minValue = maxValue;
+        minRange.value = minValue;
+    }
+
+    document.getElementById("minPrice").textContent =
+        "₹" + minValue.toLocaleString("en-IN");
+
+    document.getElementById("maxPrice").textContent =
+        "₹" + maxValue.toLocaleString("en-IN");
+
+    filterProductsByPrice(minValue, maxValue);
+}
+
+
+function filterProductsByPrice(minPrice, maxPrice) {
+    const cards = document.querySelectorAll(".product-card");
+
+    cards.forEach(card => {
+        const priceText = card.querySelector(".price").textContent;
+
+        const price = Number(
+            priceText.replace(/[₹,]/g, "")
+        );
+
+        if (price >= minPrice && price <= maxPrice) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+function applyRatingFilter() {
+    const selectedRatings = Array.from(
+        document.querySelectorAll(".rating-filter:checked")
+    ).map(checkbox => Number(checkbox.value));
+
+    const cards = document.querySelectorAll(".product-card");
+
+    cards.forEach(card => {
+        const ratingElement = card.querySelector(".rating");
+
+        if (!ratingElement) {
+            card.style.display = selectedRatings.length === 0 ? "" : "none";
+            return;
+        }
+
+        const rating = Number(
+            ratingElement.textContent
+                .replace("⭐", "")
+                .trim()
+        );
+
+        // No rating selected → show everything
+        if (selectedRatings.length === 0) {
+            card.style.display = "";
+            return;
+        }
+
+        // Use the highest selected rating
+        const minimumRating = Math.max(...selectedRatings);
+
+        if (rating >= minimumRating) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+document.querySelectorAll(".rating-filter").forEach(function(checkbox) {
+    checkbox.addEventListener("change", applyRatingFilter);
+});
+
+    </script>
+
+
+</body>
+
+</html>

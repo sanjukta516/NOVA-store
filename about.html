@@ -1,0 +1,284 @@
+ <escape><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About NOVA</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffafa;
+            color: #292020;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #4d0404;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #e7b8b8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #300303, #720b0b);
+            color: white;
+            text-align: center;
+            padding: 90px 20px;
+        }
+
+        .hero .eyebrow {
+            color: #e9c5c5;
+            letter-spacing: 4px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 76px);
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+        }
+
+        .hero h2 {
+            font-size: clamp(22px, 4vw, 34px);
+            font-weight: normal;
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            color: #f0dddd;
+        }
+
+        .section {
+            max-width: 1100px;
+            margin: auto;
+            padding: 65px 25px;
+        }
+
+        .section h2 {
+            color: #650505;
+            font-size: 30px;
+            margin-bottom: 18px;
+        }
+
+        .section p {
+            color: #625656;
+            margin-bottom: 15px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature {
+            background: white;
+            border: 1px solid #eadada;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .feature h3 {
+            color: #650505;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .mission {
+            background: #f4e8e8;
+            text-align: center;
+            padding: 55px 25px;
+        }
+
+        .mission h2 {
+            color: #650505;
+            margin-bottom: 12px;
+        }
+
+        .mission p {
+            max-width: 700px;
+            margin: auto;
+            color: #625656;
+        }
+
+        .shop-button {
+            display: inline-block;
+            background: #650505;
+            color: white;
+            padding: 13px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 22px;
+            transition: 0.2s;
+        }
+
+        .shop-button:hover {
+            background: #850b0b;
+        }
+
+        footer {
+            background: #300303;
+            color: #eadada;
+            text-align: center;
+            padding: 25px 15px;
+            font-size: 13px;
+        }
+
+        footer a {
+            color: white;
+            margin: 0 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 650px) {
+            header {
+                flex-direction: column;
+            }
+
+            nav {
+                justify-content: center;
+                gap: 14px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 65px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="sample2.html" class="logo">NOVA</a>
+
+        <nav>
+            <a href="sample2.html">Home</a>
+            <a href="all-products.html">All Products</a>
+            <a href="categories.html">Categories</a>
+            <a href="about.html">About NOVA</a>
+            <a href="location.html">Location</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <p class="eyebrow">DISCOVER OUR WORLD</p>
+        <h1>NOVA</h1>
+        <h2>Beyond Limits.</h2>
+        <p>
+            Technology, choice and innovation — bringing our own products
+            and a world of brands together in one place.
+        </p>
+    </section>
+
+    <section class="section">
+        <h2>Our Story</h2>
+        <p>
+            NOVA is both a technology brand and an online marketplace.
+            We bring our own NOVA-branded products together with products
+            from other brands and retailers, giving customers more choice
+            in one convenient destination.
+        </p>
+        <p>
+            Whether you're looking for your next everyday gadget or
+            exploring technology from different brands, NOVA is designed
+            to make discovering products simpler.
+        </p>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+        <div class="center">
+            <h2>Two Worlds. One Platform.</h2>
+            <p>Discover what makes NOVA more than just a store.</p>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <h3>NOVA Originals</h3>
+                <p>
+                    Explore our own range of NOVA-branded technology
+                    products, created for customers who want innovation
+                    and a distinctive NOVA experience.
+                </p>
+            </div>
+
+            <div class="feature">
+                <h3>The NOVA Marketplace</h3>
+                <p>
+                    Discover products from third-party brands and retailers.
+                    Compare choices across the marketplace while seeing
+                    the brand and seller information provided for each item.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mission">
+        <h2>Our Vision</h2>
+        <p>
+            We believe technology should open up possibilities.
+            Our goal is to bring products, brands, retailers and customers
+            together through one accessible shopping experience.
+        </p>
+        <a href="all-products.html" class="shop-button">Explore Products</a>
+    </section>
+
+    <footer>
+        <p>© 2026 NOVA. All rights reserved.</p>
+        <p style="margin-top: 8px;">
+            <a href="about.html">About NOVA</a>
+            <a href="location.html">Location</a>
+            <a href="contact.html">Contact Us</a>
+        </p>
+    </footer>
+
+</body>
+</html></escape>

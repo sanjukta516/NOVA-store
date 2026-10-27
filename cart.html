@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NOVA - Cart</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            height: 75px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 30px;
+
+            box-shadow:
+                0 2px 5px rgba(0,0,0,0.15);
+        }
+
+
+        .back-button {
+            background: none;
+            border: none;
+
+            font-size: 28px;
+
+            cursor: pointer;
+        }
+
+
+        .company {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-left: 25px;
+        }
+
+
+        .company img {
+            width: 45px;
+            height: 45px;
+
+            object-fit: contain;
+        }
+
+
+        .company h1 {
+            margin: 0;
+
+            font-size: 25px;
+
+            font-family: Georgia, serif;
+
+            color: #4d0404ce;
+        }
+
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .cart-page {
+
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 50px 30px;
+        }
+
+
+        .cart-title {
+
+            font-size: 36px;
+
+            margin-bottom: 35px;
+        }
+
+
+        .cart-container {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 320px;
+
+            gap: 30px;
+        }
+
+
+        /* =========================
+           CART ITEMS
+        ========================= */
+
+        .cart-items {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 20px;
+        }
+
+
+        .cart-item {
+
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.1);
+        }
+
+
+        .cart-item img {
+
+            width: 120px;
+
+            height: 120px;
+
+            object-fit: contain;
+
+            background: #fafafa;
+
+            border-radius: 8px;
+        }
+
+
+        .item-info {
+
+            flex: 1;
+        }
+
+
+        .item-info h2 {
+
+            margin: 0 0 8px;
+
+            font-size: 21px;
+        }
+
+
+        .item-price {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #4d0404ce;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* =========================
+           QUANTITY
+        ========================= */
+
+        .quantity-controls {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .quantity-button {
+
+            width: 32px;
+            height: 32px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background: #eee;
+
+            font-size: 18px;
+
+            cursor: pointer;
+        }
+
+
+        .quantity-button:hover {
+
+            background: #ddd;
+        }
+
+
+        .quantity {
+
+            min-width: 25px;
+
+            text-align: center;
+
+            font-weight: bold;
+        }
+
+
+        .remove-button {
+
+            margin-top: 12px;
+
+            border: none;
+
+            background: none;
+
+            color: #a00000;
+
+            cursor: pointer;
+
+            padding: 0;
+
+            font-size: 14px;
+        }
+
+
+        .remove-button:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           SUMMARY
+        ========================= */
+
+        .cart-summary {
+
+            background: white;
+
+            border-radius: 10px;
+
+            padding: 25px;
+
+            height: fit-content;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.1);
+        }
+
+
+        .cart-summary h2 {
+
+            margin-top: 0;
+
+            font-size: 24px;
+        }
+
+
+        .summary-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin: 15px 0;
+
+            color: #555;
+        }
+
+
+        .total-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #ddd;
+        }
+
+
+        .checkout-button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 25px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #4d0404ce;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+
+        .checkout-button:hover {
+
+            background: #300000;
+        }
+
+
+        /* =========================
+           EMPTY CART
+        ========================= */
+
+        .empty-cart {
+
+            background: white;
+
+            padding: 70px 20px;
+
+            text-align: center;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.1);
+        }
+
+
+        .empty-cart h2 {
+
+            margin-bottom: 10px;
+        }
+
+
+        .continue-button {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 12px 25px;
+
+            background: #4d0404ce;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .cart-container {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .cart-item {
+
+                align-items: flex-start;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .cart-item {
+
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <button
+            class="back-button"
+            onclick="history.back()"
+        >
+            ←
+        </button>
+
+
+        <div class="company">
+
+            <img
+                src="logo.png"
+                alt="NOVA"
+            >
+
+            <h1>NOVA</h1>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         CART
+    ========================= -->
+
+    <main class="cart-page">
+
+        <h1 class="cart-title">
+            🛒 Your Cart
+        </h1>
+
+
+        <div
+            id="cartContent"
+        >
+
+            <!-- Cart will be loaded here -->
+
+        </div>
+
+    </main>
+
+
+
+    <script>
+
+        /* =========================
+           GET CART
+        ========================= */
+
+        function getCart() {
+
+            return JSON.parse(
+                localStorage.getItem("novaCart")
+            ) || [];
+
+        }
+
+
+        /* =========================
+           SAVE CART
+        ========================= */
+
+        function saveCart(cart) {
+
+            localStorage.setItem(
+                "novaCart",
+                JSON.stringify(cart)
+            );
+
+        }
+
+
+        /* =========================
+           DISPLAY CART
+        ========================= */
+
+        function displayCart() {
+
+            const cart =
+                getCart();
+
+            const container =
+                document.getElementById(
+                    "cartContent"
+                );
+
+
+            /* =========================
+               EMPTY CART
+            ========================= */
+
+            if (cart.length === 0) {
+
+                container.innerHTML = `
+
+                    <div class="empty-cart">
+
+                        <h2>
+                            Your cart is empty
+                        </h2>
+
+                        <p>
+                            Looks like you haven't
+                            added anything yet.
+                        </p>
+
+                        <a
+                            href="sample2.html"
+                            class="continue-button"
+                        >
+                            Continue Shopping
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            /* =========================
+               CALCULATE TOTAL
+            ========================= */
+
+            let total = 0;
+
+            cart.forEach(function(item) {
+
+                const price =
+                    parseFloat(
+                        item.price
+                            .replace("₹", "")
+                            .replace(/,/g, "")
+                    );
+
+                total +=
+                    price *
+                    item.quantity;
+
+            });
+
+
+            /* =========================
+               CREATE ITEMS
+            ========================= */
+
+            let itemsHTML = "";
+
+
+            cart.forEach(function(item, index) {
+
+                const price =
+                    parseFloat(
+                        item.price
+                            .replace("₹", "")
+                            .replace(/,/g, "")
+                    );
+
+
+                const itemTotal =
+                    price *
+                    item.quantity;
+
+
+                itemsHTML += `
+
+                    <div class="cart-item">
+
+                        <img
+                            src="${item.image}"
+                            alt="${item.name}"
+                            onerror="this.src='logo.png'"
+                        >
+
+
+                        <div class="item-info">
+
+                            <h2>
+                                ${item.name}
+                            </h2>
+
+
+                            <div class="item-price">
+
+                                ₹${price.toLocaleString("en-IN")}
+
+                            </div>
+
+
+                            <div class="quantity-controls">
+
+                                <button
+                                    class="quantity-button"
+                                    onclick="changeQuantity(
+                                        ${index},
+                                        -1
+                                    )"
+                                >
+                                    −
+                                </button>
+
+
+                                <span class="quantity">
+                                    ${item.quantity}
+                                </span>
+
+
+                                <button
+                                    class="quantity-button"
+                                    onclick="changeQuantity(
+                                        ${index},
+                                        1
+                                    )"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+
+                            <button
+                                class="remove-button"
+                                onclick="removeItem(${index})"
+                            >
+                                Remove
+                            </button>
+
+                        </div>
+
+
+                        <strong>
+                            ₹${itemTotal.toLocaleString("en-IN")}
+                        </strong>
+
+                    </div>
+
+                `;
+
+            });
+
+
+            /* =========================
+               FINAL HTML
+            ========================= */
+
+            container.innerHTML = `
+
+                <div class="cart-container">
+
+                    <div class="cart-items">
+
+                        ${itemsHTML}
+
+                    </div>
+
+
+                    <div class="cart-summary">
+
+                        <h2>
+                            Order Summary
+                        </h2>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Items
+                            </span>
+
+                            <span>
+                                ${cart.reduce(
+                                    (sum, item) =>
+                                        sum + item.quantity,
+                                    0
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="total-row">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <span>
+                                ₹${total.toLocaleString("en-IN")}
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            class="checkout-button"
+                            onclick="checkout()"
+                        >
+                            Proceed to Checkout
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* =========================
+           CHANGE QUANTITY
+        ========================= */
+
+        function changeQuantity(
+            index,
+            change
+        ) {
+
+            const cart =
+                getCart();
+
+
+            cart[index].quantity +=
+                change;
+
+
+            if (
+                cart[index].quantity <= 0
+            ) {
+
+                cart.splice(index, 1);
+
+            }
+
+
+            saveCart(cart);
+
+            displayCart();
+
+        }
+
+
+        /* =========================
+           REMOVE ITEM
+        ========================= */
+
+        function removeItem(index) {
+
+            const cart =
+                getCart();
+
+
+            cart.splice(index, 1);
+
+
+            saveCart(cart);
+
+            displayCart();
+
+        }
+
+
+        /* =========================
+           CHECKOUT
+        ========================= */
+
+        async function checkout() {
+
+    const storedUser =
+        localStorage.getItem("novaUser");
+
+    if (!storedUser) {
+
+        alert(
+            "Please login before checking out."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return;
+    }
+
+
+    const user =
+        JSON.parse(storedUser);
+
+
+    const cart =
+        getCart();
+
+
+    if (cart.length === 0) {
+
+        alert(
+            "Your cart is empty."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch("/api/orders", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    userId: user.id,
+
+                    cart: cart
+
+                })
+
+            });
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                result.error ||
+                "Could not place order."
+            );
+
+            return;
+        }
+
+
+        alert(
+            "Order placed successfully! 🎉\n" +
+            "Order ID: " +
+            result.orderId
+        );
+
+
+        /*
+         * Clear cart after successful order
+         */
+
+        localStorage.removeItem(
+            "novaCart"
+        );
+
+
+        /*
+         * Go to My Orders
+         */
+
+        window.location.href =
+            "orders.html";
+
+
+    } catch (error) {
+
+        console.error(
+            "Checkout error:",
+            error
+        );
+
+        alert(
+            "Could not connect to the server."
+        );
+
+    }
+
+}
+
+
+        /* =========================
+           LOAD
+        ========================= */
+
+        displayCart();
+
+    </script>
+
+
+</body>
+
+</html>

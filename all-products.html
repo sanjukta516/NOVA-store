@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NOVA - All Products</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        header {
+            height: 75px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 30px;
+
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .company {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 25px;
+        }
+
+        .company img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .company h1 {
+            margin: 0;
+            font-size: 25px;
+            font-family: Georgia, serif;
+            color: #4d0404ce;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: auto;
+            padding: 50px 30px;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.12);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 7px 18px rgba(0,0,0,0.2);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: white;
+        }
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-info h3 {
+            margin: 0 0 8px;
+            font-size: 20px;
+        }
+
+        .category {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #555;
+            font-size: 14px;
+            min-height: 40px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4d0404ce;
+            margin-top: 12px;
+        }
+
+        .loading,
+        .error {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+        }
+
+        @media (max-width: 900px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <header>
+
+        <button
+            class="back-button"
+            onclick="history.back()"
+        >
+            ←
+        </button>
+
+        <div class="company">
+
+            <img
+                src="logo.png"
+                alt="NOVA"
+            >
+
+            <h1>NOVA</h1>
+
+        </div>
+
+    </header>
+
+
+    <main class="page">
+
+        <h1 class="page-title">
+            All Products
+        </h1>
+
+        <div
+            class="product-grid"
+            id="productGrid"
+        >
+
+            <div class="loading">
+                Loading products...
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        async function loadAllProducts() {
+
+            const grid =
+                document.getElementById("productGrid");
+
+            try {
+
+                const response =
+                    await fetch("/api/all-products");
+
+                const products =
+                    await response.json();
+
+                grid.innerHTML = "";
+
+                products.forEach(function(product) {
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className =
+                        "product-card";
+
+                    card.onclick = function() {
+
+                        window.location.href =
+                            "product.html?id=" +
+                            product.id;
+
+                    };
+
+                    card.innerHTML = `
+
+                        <img
+                            src="${product.image}"
+                            alt="${product.name}"
+                            onerror="this.src='logo.png'"
+                        >
+
+                        <div class="product-info">
+
+                            <h3>
+                                ${product.name}
+                            </h3>
+
+                            <div class="category">
+                                ${product.category}
+                            </div>
+
+                            <div class="description">
+                                ${product.description}
+                            </div>
+
+                            <div class="price">
+                                ₹${Number(
+                                    product.price
+                                ).toLocaleString("en-IN")}
+                            </div>
+
+                        </div>
+
+                    `;
+
+                    grid.appendChild(card);
+
+                });
+
+            } catch (error) {
+
+                console.error(error);
+
+                grid.innerHTML = `
+                    <div class="error">
+                        Could not load products.
+                    </div>
+                `;
+
+            }
+
+        }
+
+        loadAllProducts();
+
+    </script>
+
+</body>
+
+</html>

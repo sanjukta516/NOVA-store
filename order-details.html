@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NOVA - Order Details</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7eeee;
+            color: #222;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            height: 75px;
+            background: white;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 30px;
+
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+
+            font-size: 28px;
+
+            cursor: pointer;
+
+            margin-right: 25px;
+        }
+
+        .company {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .company img {
+            width: 45px;
+            height: 45px;
+
+            object-fit: contain;
+        }
+
+        .company h1 {
+            margin: 0;
+
+            font-size: 25px;
+
+            font-family: Georgia, serif;
+
+            color: #4d0404ce;
+        }
+
+
+        /* ================= PAGE ================= */
+
+        .page {
+            width: 100%;
+
+            padding: 35px 45px 70px;
+        }
+
+        .page-inner {
+            width: 100%;
+            max-width: 1250px;
+
+            margin: auto;
+        }
+
+
+        /* ================= ORDER HERO ================= */
+
+        .order-hero {
+            background: white;
+
+            padding: 30px 35px;
+
+            border-bottom: 3px solid #4d0404ce;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-label {
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 7px;
+        }
+
+        .order-number {
+            font-size: 30px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+        .order-date {
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .status {
+            color: white;
+
+            background: #4d0404ce;
+
+            padding: 10px 22px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* ================= SECTION ================= */
+
+        .section {
+            background: white;
+
+            margin-top: 18px;
+
+            padding: 32px 35px;
+        }
+
+        .section-title {
+            margin: 0 0 28px;
+
+            font-size: 22px;
+        }
+
+
+        /* ================= TRACKING ================= */
+
+        .tracking {
+            width: 100%;
+        }
+
+        .tracking-line {
+            position: relative;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            margin: 35px 0 10px;
+        }
+
+        .tracking-line::before {
+            content: "";
+
+            position: absolute;
+
+            top: 15px;
+            left: 10%;
+
+            width: 80%;
+
+            height: 3px;
+
+            background: #ddd;
+
+            z-index: 0;
+        }
+
+        .tracking-progress {
+            position: absolute;
+
+            top: 15px;
+            left: 10%;
+
+            height: 3px;
+
+            background: #4d0404ce;
+
+            z-index: 1;
+
+            transition: width 0.3s ease;
+        }
+
+        .tracking-step {
+            position: relative;
+
+            z-index: 2;
+
+            text-align: center;
+        }
+
+        .step-circle {
+            width: 32px;
+            height: 32px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            background: white;
+
+            border: 3px solid #ddd;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+        .tracking-step.active .step-circle {
+            background: #4d0404ce;
+
+            border-color: #4d0404ce;
+
+            color: white;
+        }
+
+        .step-title {
+            margin-top: 12px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .step-subtitle {
+            margin-top: 5px;
+
+            color: #888;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= ITEMS ================= */
+
+        .order-item {
+            display: flex;
+
+            align-items: center;
+
+            padding: 20px 0;
+
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 120px;
+            height: 120px;
+
+            object-fit: contain;
+
+            margin-right: 30px;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 19px;
+
+            font-weight: bold;
+
+            margin-bottom: 9px;
+        }
+
+        .item-price {
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 7px;
+        }
+
+        .item-quantity {
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .item-total {
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #4d0404ce;
+        }
+
+
+        /* ================= BOTTOM AREA ================= */
+
+        .bottom-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            background: white;
+
+            margin-top: 18px;
+        }
+
+        .bottom-section {
+            padding: 32px 35px;
+
+            min-height: 230px;
+        }
+
+        .bottom-section + .bottom-section {
+            border-left: 1px solid #ddd;
+        }
+
+        .bottom-title {
+            font-size: 20px;
+
+            margin: 0 0 25px;
+        }
+
+
+        /* ================= BILL ================= */
+
+        .bill-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 16px;
+
+            font-size: 15px;
+        }
+
+        .bill-row span:first-child {
+            color: #666;
+        }
+
+        .bill-total {
+            border-top: 1px solid #ddd;
+
+            margin-top: 20px;
+
+            padding-top: 18px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            color: #4d0404ce;
+        }
+
+
+        /* ================= DELIVERY ================= */
+
+        .delivery-row {
+            margin-bottom: 18px;
+        }
+
+        .delivery-label {
+            color: #888;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+        }
+
+        .delivery-value {
+            font-size: 15px;
+
+            font-weight: 500;
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .actions {
+            display: flex;
+
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+        .action-button {
+            padding: 12px 22px;
+
+            border: 1px solid #4d0404ce;
+
+            background: white;
+
+            color: #4d0404ce;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            display: inline-block;
+        }
+
+        .action-button:hover {
+            background: #f8eeee;
+        }
+
+
+        /* ================= LOADING / ERROR ================= */
+
+        .loading,
+        .error {
+            background: white;
+
+            padding: 80px 20px;
+
+            text-align: center;
+
+            font-size: 17px;
+        }
+
+        .error {
+            color: #a00000;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 800px) {
+
+            .page {
+                padding: 20px;
+            }
+
+            .order-hero {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 20px;
+            }
+
+            .tracking-line {
+                overflow-x: auto;
+
+                min-width: 650px;
+            }
+
+            .tracking {
+                overflow-x: auto;
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom-section + .bottom-section {
+                border-left: none;
+
+                border-top: 1px solid #ddd;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 0 18px;
+            }
+
+            .page {
+                padding: 15px;
+            }
+
+            .section,
+            .order-hero,
+            .bottom-section {
+                padding: 25px 20px;
+            }
+
+            .order-number {
+                font-size: 24px;
+            }
+
+            .item-image {
+                width: 85px;
+                height: 85px;
+
+                margin-right: 18px;
+            }
+
+            .item-name {
+                font-size: 16px;
+            }
+
+            .item-total {
+                font-size: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <button
+            class="back-button"
+            onclick="history.back()"
+        >
+            ←
+        </button>
+
+        <div class="company">
+
+            <img
+                src="logo.png"
+                alt="NOVA"
+            >
+
+            <h1>NOVA</h1>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ================= PAGE ================= -->
+
+    <main class="page">
+
+        <div
+            class="page-inner"
+            id="orderContainer"
+        >
+
+            <div class="loading">
+                Loading order details...
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <script>
+
+        async function loadOrderDetails() {
+
+            const storedUser =
+                localStorage.getItem("novaUser");
+
+
+            if (!storedUser) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            const user =
+                JSON.parse(storedUser);
+
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            const orderId =
+                params.get("id");
+
+
+            const container =
+                document.getElementById(
+                    "orderContainer"
+                );
+
+
+            if (!orderId) {
+
+                container.innerHTML = `
+                    <div class="error">
+                        Order not found.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/orders/" + user.id
+                    );
+
+
+                const orders =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        orders.error ||
+                        "Could not load orders"
+                    );
+
+                }
+
+
+                const order =
+                    orders.find(
+                        item =>
+                            String(item.id) ===
+                            String(orderId)
+                    );
+
+
+                if (!order) {
+
+                    container.innerHTML = `
+                        <div class="error">
+                            Order not found.
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+                const date =
+                    new Date(
+                        order.created_at
+                    ).toLocaleString(
+                        "en-IN"
+                    );
+
+
+                /* ================= STATUS ================= */
+
+                const status =
+                    String(
+                        order.status || "Pending"
+                    ).toLowerCase();
+
+
+                let currentStep = 1;
+
+if (status.includes("delivered")) {
+
+    currentStep = 5;
+
+} else if (status.includes("delivery")) {
+
+    currentStep = 4;
+
+} else if (status.includes("shipped")) {
+
+    currentStep = 3;
+
+} else if (status.includes("packed")) {
+
+    currentStep = 2;
+
+} else {
+
+    currentStep = 1;
+
+}
+
+
+                const progressWidth =
+                    ((currentStep - 1) / 4) * 80;
+
+
+                /* ================= ITEMS ================= */
+
+                const itemsHTML =
+                    order.items.map(
+                        function(item) {
+
+                            const itemTotal =
+                                Number(item.price) *
+                                Number(item.quantity);
+
+
+                            return `
+
+                                <div class="order-item">
+
+                                    <img
+                                        class="item-image"
+                                        src="${item.image || 'logo.png'}"
+                                        alt="${item.product_name}"
+                                    >
+
+                                    <div class="item-info">
+
+                                        <div class="item-name">
+                                            ${item.product_name}
+                                        </div>
+
+                                        <div class="item-price">
+                                            ₹${Number(
+                                                item.price
+                                            ).toLocaleString("en-IN")}
+                                            per item
+                                        </div>
+
+                                        <div class="item-quantity">
+                                            Quantity: ${item.quantity}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="item-total">
+
+                                        ₹${itemTotal.toLocaleString(
+                                            "en-IN"
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+                            `;
+
+                        }
+                    ).join("");
+
+
+                /* ================= PAGE ================= */
+
+                container.innerHTML = `
+
+                    <!-- ORDER HEADER -->
+
+                    <section class="order-hero">
+
+                        <div>
+
+                            <div class="order-label">
+                                ORDER DETAILS
+                            </div>
+
+                            <div class="order-number">
+                                Order #${order.id}
+                            </div>
+
+                            <div class="order-date">
+                                Placed on ${date}
+                            </div>
+
+                        </div>
+
+
+                        <div class="status">
+                            ${order.status}
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- TRACKING -->
+
+                    <section class="section">
+
+                        <h2 class="section-title">
+                            Track Your Order
+                        </h2>
+
+
+                        <div class="tracking">
+
+                            <div class="tracking-line">
+
+                                <div
+                                    class="tracking-progress"
+                                    style="
+                                        width: ${progressWidth}%;
+                                    "
+                                ></div>
+
+
+                                <div
+                                    class="
+                                        tracking-step
+                                        ${currentStep >= 1
+                                            ? "active"
+                                            : ""}
+                                    "
+                                >
+
+                                    <div class="step-circle">
+                                        ✓
+                                    </div>
+
+                                    <div class="step-title">
+                                        Ordered
+                                    </div>
+
+                                    <div class="step-subtitle">
+                                        Order placed
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    class="
+                                        tracking-step
+                                        ${currentStep >= 2
+                                            ? "active"
+                                            : ""}
+                                    "
+                                >
+
+                                    <div class="step-circle">
+                                        ${currentStep >= 2
+                                            ? "✓"
+                                            : "2"}
+                                    </div>
+
+                                    <div class="step-title">
+                                        Packed
+                                    </div>
+
+                                    <div class="step-subtitle">
+                                        Being prepared
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    class="
+                                        tracking-step
+                                        ${currentStep >= 3
+                                            ? "active"
+                                            : ""}
+                                    "
+                                >
+
+                                    <div class="step-circle">
+                                        ${currentStep >= 3
+                                            ? "✓"
+                                            : "3"}
+                                    </div>
+
+                                    <div class="step-title">
+                                        Shipped
+                                    </div>
+
+                                    <div class="step-subtitle">
+                                        On the way
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    class="
+                                        tracking-step
+                                        ${currentStep >= 4
+                                            ? "active"
+                                            : ""}
+                                    "
+                                >
+
+                                    <div class="step-circle">
+                                        ${currentStep >= 4
+                                            ? "✓"
+                                            : "4"}
+                                    </div>
+
+                                    <div class="step-title">
+                                        Out for Delivery
+                                    </div>
+
+                                    <div class="step-subtitle">
+                                        Almost there
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    class="
+                                        tracking-step
+                                        ${currentStep >= 5
+                                            ? "active"
+                                            : ""}
+                                    "
+                                >
+
+                                    <div class="step-circle">
+                                        ${currentStep >= 5
+                                            ? "✓"
+                                            : "5"}
+                                    </div>
+
+                                    <div class="step-title">
+                                        Delivered
+                                    </div>
+
+                                    <div class="step-subtitle">
+                                        Enjoy your NOVA
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- ITEMS -->
+
+                    <section class="section">
+
+                        <h2 class="section-title">
+                            Items in This Order
+                        </h2>
+
+                        ${itemsHTML}
+
+                    </section>
+
+
+
+                    <!-- BILL + DELIVERY -->
+
+                    <div class="bottom-grid">
+
+
+                        <!-- BILL -->
+
+                        <section class="bottom-section">
+
+                            <h2 class="bottom-title">
+                                Bill Details
+                            </h2>
+
+
+                            <div class="bill-row">
+
+                                <span>
+                                    Items
+                                </span>
+
+                                <span>
+                                    ₹${Number(
+                                        order.total
+                                    ).toLocaleString("en-IN")}
+                                </span>
+
+                            </div>
+
+
+                            <div class="bill-row">
+
+                                <span>
+                                    Delivery
+                                </span>
+
+                                <span>
+                                    FREE
+                                </span>
+
+                            </div>
+
+
+                            <div class="bill-total">
+
+                                <span>
+                                    Total
+                                </span>
+
+                                <span>
+                                    ₹${Number(
+                                        order.total
+                                    ).toLocaleString("en-IN")}
+                                </span>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- DELIVERY -->
+
+                        <section class="bottom-section">
+
+                            <h2 class="bottom-title">
+                                Delivery Details
+                            </h2>
+
+
+                            <div class="delivery-row">
+
+                                <div class="delivery-label">
+                                    DELIVERY STATUS
+                                </div>
+
+                                <div class="delivery-value">
+                                    ${order.status}
+                                </div>
+
+                            </div>
+
+
+                            <div class="delivery-row">
+
+                                <div class="delivery-label">
+                                    CUSTOMER
+                                </div>
+
+                                <div class="delivery-value">
+                                    ${user.name}
+                                </div>
+
+                            </div>
+
+
+                            <div class="delivery-row">
+
+                                <div class="delivery-label">
+                                    EMAIL
+                                </div>
+
+                                <div class="delivery-value">
+                                    ${user.email}
+                                </div>
+
+                            </div>
+
+
+                            <div class="delivery-row">
+
+                                <div class="delivery-label">
+                                    DELIVERY ADDRESS
+                                </div>
+
+                                <div class="delivery-value">
+                                    Address details will appear here.
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="actions">
+
+                        <a
+                            href="orders.html"
+                            class="action-button"
+                        >
+                            ← Back to My Orders
+                        </a>
+
+                    </div>
+
+                `;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Order details error:",
+                    error
+                );
+
+
+                container.innerHTML = `
+
+                    <div class="error">
+
+                        Could not load
+                        your order details.
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        loadOrderDetails();
+
+    </script>
+
+
+</body>
+
+</html>

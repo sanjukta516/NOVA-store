@@ -1,0 +1,482 @@
+<escape><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | NOVA</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffafa;
+            color: #292020;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #4d0404;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #e7b8b8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #300303, #720b0b);
+            color: white;
+            text-align: center;
+            padding: 65px 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(35px, 5vw, 54px);
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #f0dddd;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+            padding: 50px 25px 70px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            color: #650505;
+            font-size: 30px;
+        }
+
+        .section-title p {
+            color: #766666;
+            margin-top: 8px;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 55px;
+        }
+
+        .support-card {
+            background: white;
+            border: 1px solid #eadada;
+            border-radius: 10px;
+            padding: 24px 18px;
+        }
+
+        .support-icon {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .support-card h3 {
+            color: #650505;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .support-card p {
+            color: #766666;
+            font-size: 14px;
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 35px;
+            align-items: start;
+        }
+
+        .contact-info h2,
+        .contact-form h2 {
+            color: #650505;
+            font-size: 27px;
+            margin-bottom: 12px;
+        }
+
+        .contact-info > p {
+            color: #766666;
+            margin-bottom: 25px;
+        }
+
+        .info-item {
+            padding: 18px 0;
+            border-bottom: 1px solid #eadada;
+        }
+
+        .info-item h3 {
+            color: #650505;
+            font-size: 17px;
+            margin-bottom: 5px;
+        }
+
+        .info-item p {
+            color: #766666;
+            font-size: 14px;
+        }
+
+        .contact-form {
+            background: white;
+            border: 1px solid #eadada;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d8caca;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            background: #fffdfd;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #650505;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            background: #650505;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            background: #850b0b;
+        }
+
+        .notice {
+            margin-top: 14px;
+            font-size: 13px;
+            color: #766666;
+        }
+
+        #formMessage {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        footer {
+            background: #300303;
+            color: #eadada;
+            text-align: center;
+            padding: 25px 15px;
+            font-size: 13px;
+        }
+
+        footer a {
+            color: white;
+            margin: 0 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            .support-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+            }
+
+            nav {
+                justify-content: center;
+                gap: 13px;
+            }
+
+            .support-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="sample2.html" class="logo">NOVA</a>
+
+        <nav>
+            <a href="sample2.html">Home</a>
+            <a href="all-products.html">All Products</a>
+            <a href="categories.html">Categories</a>
+            <a href="about.html">About NOVA</a>
+            <a href="location.html">Location</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>How Can We Help?</h1>
+        <p>We're here to help make your NOVA shopping experience better.</p>
+    </section>
+
+    <main class="container">
+
+        <section>
+            <div class="section-title">
+                <h2>Customer Support</h2>
+                <p>Choose the type of assistance you need.</p>
+            </div>
+
+            <div class="support-grid">
+
+                <div class="support-card">
+                    <div class="support-icon">🎧</div>
+                    <h3>Customer Service</h3>
+                    <p>
+                        Questions about NOVA, products, accounts,
+                        or your shopping experience.
+                    </p>
+                </div>
+
+                <div class="support-card">
+                    <div class="support-icon">📦</div>
+                    <h3>Order Support</h3>
+                    <p>
+                        Get assistance with order status, delivery,
+                        tracking, or missing items.
+                    </p>
+                </div>
+
+                <div class="support-card">
+                    <div class="support-icon">↩️</div>
+                    <h3>Returns & Refunds</h3>
+                    <p>
+                        Ask about return eligibility, replacements,
+                        refunds, or damaged products.
+                    </p>
+                </div>
+
+                <div class="support-card">
+                    <div class="support-icon">🏪</div>
+                    <h3>Seller Support</h3>
+                    <p>
+                        Help for retailers who want to sell or
+                        manage their products on NOVA.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="contact-layout">
+
+            <div class="contact-info">
+                <h2>Contact NOVA</h2>
+
+                <p>
+                    Have a question or need assistance?
+                    Send us a message using the form.
+                    Select the department that best matches your enquiry.
+                </p>
+
+                <div class="info-item">
+                    <h3>Customer Service</h3>
+                    <p>Product questions and general assistance</p>
+                </div>
+
+                <div class="info-item">
+                    <h3>Order & Delivery</h3>
+                    <p>Order updates, shipping, and tracking enquiries</p>
+                </div>
+
+                <div class="info-item">
+                    <h3>Returns & Refunds</h3>
+                    <p>Returns, replacements, and refund enquiries</p>
+                </div>
+
+                <div class="info-item">
+                    <h3>Retailer Enquiries</h3>
+                    <p>Marketplace selling and retailer assistance</p>
+                </div>
+
+                <p class="notice">
+                    Official contact details and customer support
+                    hours will be added once they are established.
+                </p>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+                <h2>Send Us a Message</h2>
+
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="department">What do you need help with?</label>
+                    <select id="department" name="department" required>
+                        <option value="">Select a department</option>
+                        <option value="Customer Service">Customer Service</option>
+                        <option value="Order Support">Order Support</option>
+                        <option value="Returns and Refunds">Returns & Refunds</option>
+                        <option value="Seller Support">Seller Support</option>
+                        <option value="Other">Other Enquiry</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="orderId">Order ID (optional)</label>
+                    <input
+                        type="text"
+                        id="orderId"
+                        name="orderId"
+                        placeholder="Enter your order ID if applicable"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        placeholder="Briefly describe your issue"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Tell us how we can help..."
+                        required
+                    ></textarea>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    Submit Enquiry
+                </button>
+
+                <p id="formMessage" role="status"></p>
+
+                <p class="notice">
+                    Please don't include passwords, payment details,
+                    or other sensitive information in your message.
+                </p>
+            </form>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 NOVA. All rights reserved.</p>
+        <p style="margin-top: 8px;">
+            <a href="about.html">About NOVA</a>
+            <a href="location.html">Location</a>
+            <a href="contact.html">Contact Us</a>
+        </p>
+    </footer>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            document.getElementById("formMessage").textContent =
+                "The contact form design is ready, but message submission has not been connected yet. Please connect a backend before using it for real enquiries.";
+        });
+    </script>
+
+</body>
+</html></escape>
