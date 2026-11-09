@@ -34,7 +34,7 @@ db.connect((err) => {
 // =========================
 
 app.get("/", (req, res) => {
-    res.send("NOVA backend is running!");
+    res.sendFile(path.join(__dirname, "sample2.html"));
 });
 
 // =========================
